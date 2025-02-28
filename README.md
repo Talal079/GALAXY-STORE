@@ -1,42 +1,101 @@
-
-        <h1>GALAXY STORE</h1>
-        <p>مرحبًا بكم في متجر المجرة! إليكم المنتجات المتاحة:</p>
-        <div class="product-list" id="productList"></div>
-    </div>
-    
-    <footer>
-        <p>حقوق الطبع والنشر © <a href="https://www.instagram.com/talal_megumi" target="_blank">talal_megumi</a></p>
-    </footer>
-
-    <script>
-        const products = [
-            { name: "تغير لقب يوم", price: "50 ستارز" },
-            { name: "تغير لقب ثلاث ايام", price: "150 ستارز" },
-            { name: "تغير لقب اسبوع", price: "300 ستارز" },
-            { name: "حذف انذار", price: "150 ستارز" },
-            { name: "حذف انذارين", price: "250 ستارز" },
-            { name: "تغير صورة كوكب يوم", price: "50 ستارز" },
-            { name: "تغير صورة كوكب ثلاث ايام", price: "150 ستارز" },
-            { name: "تغير اسم الكوكب يوم", price: "50 ستارز" },
-            { name: "تغير اسم الكوكب ثلاث ايام", price: "100 ستارز" },
-            { name: "زيارة يوم", price: "50 ستارز" },
-            { name: "زيارة يومين", price: "100 ستارز" },
-            { name: "زيارة ثلاثة ايام", price: "150 ستارز" }
-        ];
-
-        // Display products immediately when the page loads
-        function displayProducts() {
-            const productListDiv = document.getElementById("productList");
-            productListDiv.innerHTML = products.map(product => `
-                <div class="product-card">
-                    <h3>${product.name}</h3>
-                    <p>السعر: ${product.price}</p>
-                </div>
-            `).join('');
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <title>زر مفاجئ!</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffe6f2;
+            font-family: Arial, sans-serif;
         }
 
-        // Call function to display products on page load
-        displayProducts();
+        .container {
+            text-align: center;
+            position: relative;
+            width: 500px;
+            height: 300px;
+        }
+
+        #question {
+            font-size: 24px;
+            color: #cc0066;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            transition: 0.3s;
+        }
+
+        #yesBtn {
+            background-color: #66cc66;
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #ff6666;
+            color: white;
+            position: absolute;
+        }
+
+        #heartLoader {
+            display: none;
+            width: 200px; /* حجم أكبر للـ GIF */
+            margin: 20px auto;
+        }
+
+        #resultContainer {
+            display: none;
+            font-size: 28px;
+            color: #cc0066;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="question">هل توافق على هذه المفاجأة؟ 🎁</div>
+        <div class="questionContainer">
+            <button id="yesBtn">نعم</button>
+            <button id="noBtn">لا</button>
+        </div>
+        <img id="heartLoader" src="https://media4.giphy.com/media/iB6I46FbLRqsLliGpI/giphy.gif" alt="تحميل">
+        <div id="resultContainer">مبروك! المفاجأة في طريقها إليك 💝</div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const heartLoader = document.getElementById('heartLoader');
+        const resultContainer = document.getElementById('resultContainer');
+        const questionContainer = document.querySelector('.questionContainer');
+
+        // حركة الزر "لا" العشوائية
+        noBtn.addEventListener("mouseover", () => {
+            const newX = Math.random() * (questionContainer.offsetWidth - noBtn.offsetWidth);
+            const newY = Math.random() * (questionContainer.offsetHeight - noBtn.offsetHeight);
+            
+            noBtn.style.left = `${newX}px`;
+            noBtn.style.top = `${newY}px`;
+        });
+
+        // تأثير الزر "نعم"
+        yesBtn.addEventListener("click", () => {
+            heartLoader.style.display = "block"; // إظهار الـ GIF
+            const timeoutId = setTimeout(() => {
+                heartLoader.style.display = "none";
+                resultContainer.style.display = "block"; // إظهار الرسالة النهائية
+            }, 3000);
+        });
     </script>
 </body>
 </html>
